@@ -1,0 +1,32 @@
+version: '3'
+
+volumes:
+  moloch:
+
+services:
+  elasticsearch:
+    image: elasticsearch:latest
+  moloch-capture:
+    restart: unless-stopped
+    build: ../../Github/docker-moloch
+    image: mathieum/docker-moloch
+    environment:
+      - VIEWER=off
+    volumes:
+      - ./logs:/data/moloch/logs
+      - moloch:/data/initialized
+      - moloch:/data/moloch/raw/
+  moloch-viewer:
+    build: ../../Github/docker-moloch
+    image: mathieum/docker-moloch
+    environment:
+      - CAPTURE=off
+    depends_on:
+      - elasticsearch
+    ports:
+      - 8005:8005
+    volumes:
+      - ./pcap:/data/pcap
+      - ./logs:/data/moloch/logs
+      - moloch:/data/initialized
+      - moloch:/data/moloch/raw/
