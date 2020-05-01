@@ -9,7 +9,7 @@ services:
   moloch-capture:
     restart: unless-stopped
     build: ../../Github/docker-moloch
-    image: mathieum/docker-moloch
+    image: tjunxiang92/docker-moloch
     environment:
       - VIEWER=off
     volumes:
@@ -18,7 +18,7 @@ services:
       - moloch:/data/moloch/raw/
   moloch-viewer:
     build: ../../Github/docker-moloch
-    image: mathieum/docker-moloch
+    image: tjunxiang92/docker-moloch
     environment:
       - CAPTURE=off
     depends_on:
